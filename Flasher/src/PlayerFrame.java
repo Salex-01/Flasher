@@ -1,4 +1,5 @@
 import java.awt.Component;
+import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
 
 public class PlayerFrame extends Component {
@@ -10,5 +11,7 @@ public class PlayerFrame extends Component {
 	long now;
 	
 	long duration;
+	
+	LinkedList<Flash> flashList = new LinkedList<Flash>();
 
 }

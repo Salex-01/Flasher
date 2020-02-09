@@ -64,7 +64,15 @@ public class Main {
 		add5s.addActionListener(new Add5sListener(pf));
 		c.add(add5s);
 
-		
+		Button addFlash = new Button();
+		addFlash.setBounds(0, (c.getHeight() * 3) / 8, c.getWidth() / 3, c.getHeight() / 8);
+		addFlash.setBackground(Color.LIGHT_GRAY);
+		addFlash.setFont(f2);
+		addFlash.setForeground(Color.BLACK);
+		addFlash.setLabel("New flash");
+		addFlash.addActionListener(new flashAddListener(pf, jf, f2));
+		c.add(addFlash);
+
 	}
 
 }
