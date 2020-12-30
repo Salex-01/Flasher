@@ -1,36 +1,25 @@
-import java.awt.Button;
-import java.awt.Color;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PlayPauseListener implements ActionListener {
-	Button b;
-	boolean c = false;
+    Interface i;
+    JButton b;
 
-	PlayerFrame pf;
+    public PlayPauseListener(Interface i1, JButton b1) {
+        i = i1;
+        b = b1;
+    }
 
-	public PlayPauseListener(Button flash, PlayerFrame pf1) {
-		b = flash;
-		pf = pf1;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (c) {
-			b.setLabel("Play");
-			b.setBackground(Color.LIGHT_GRAY);
-			b.setForeground(Color.BLACK);
-			try {
-				pf.go.acquire();
-			} catch (InterruptedException e1) {
-			}
-		} else {
-			b.setLabel("Pause");
-			b.setBackground(Color.DARK_GRAY);
-			b.setForeground(Color.WHITE);
-			pf.go.release();
-		}
-		c = !c;
-	}
-
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (Main.e != null) {
+            if (!Main.e.playing) {
+                b.setText("⏸");
+            } else {
+                b.setText("▶");
+            }
+            Main.e.togglePlay();
+        }
+    }
 }
