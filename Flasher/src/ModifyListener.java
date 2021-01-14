@@ -15,19 +15,31 @@ public class ModifyListener implements ActionListener {
         class FlashSelectorM extends FlashSelector {
             @Override
             public void valueChanged(ListSelectionEvent evt) {
-                if (PopupManager.yesNo("Modification", "Déplacer " + list.getSelectedValue() + " ?")) {
-                    String str = JOptionPane.showInputDialog("Heure du flash", "[[h:]m:]s[.xxx]");
-                    if (str != null) {
+                Flash f = Main.e.flashes.get(list.getSelectedIndex());
+                if (f.metronome) {
+                    if (PopupManager.yesNo("Modification", "Modifier " + list.getSelectedValue() + " ?")) {
+                        String str = JOptionPane.showInputDialog("Heure du flash", FlashManager.timeToString(f.time));
+                        String interval = JOptionPane.showInputDialog("Intervalle", FlashManager.timeToString(f.inter));
+                        String rep = JOptionPane.showInputDialog("Répétitions", Integer.toString(f.n));
                         Main.e.hasChanged = true;
-                        Main.e.flashes.remove(list.getSelectedIndex());
-                        Main.e.parseAndAdd(str);
+                        Main.e.flashes.removeFlash(f);
+                        Main.e.parseAndAddMetronome(str, interval, rep);
                         Main.e.draw(i);
                     }
-                    this.dispose();
+                } else {
+                    if (PopupManager.yesNo("Modification", "Déplacer " + list.getSelectedValue() + " ?")) {
+                        String str = JOptionPane.showInputDialog("Heure du flash", FlashManager.timeToString(f.time));
+                        if (str != null) {
+                            Main.e.hasChanged = true;
+                            Main.e.flashes.removeFlash(f);
+                            Main.e.parseAndAddFlash(str);
+                            Main.e.draw(i);
+                        }
+                    }
                 }
+                this.dispose();
             }
         }
         new FlashSelectorM();
     }
-
 }

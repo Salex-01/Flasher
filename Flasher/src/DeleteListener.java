@@ -16,7 +16,7 @@ public class DeleteListener implements ActionListener {
             public void valueChanged(ListSelectionEvent evt) {
                 if (PopupManager.yesNo("Suppression", "Supprimer " + list.getSelectedValue() + " ?")) {
                     Main.e.hasChanged = true;
-                    Main.e.flashes.remove(list.getSelectedIndex());
+                    Main.e.flashes.removeFlash(Main.e.flashes.get(list.getSelectedIndex()));
                     Main.e.buttonsChanged = true;
                     Main.e.draw(i);
                 }
