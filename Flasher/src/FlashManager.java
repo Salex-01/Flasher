@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 
 public class FlashManager extends Thread {
@@ -16,8 +17,10 @@ public class FlashManager extends Thread {
     int nfi = 0;
     boolean buttonsChanged = false;
     long oldTime;
+    MusicManager mm;
 
     public FlashManager(Interface i1) {
+        mm = new MusicManager(i1);
         hasChanged = true;
         f = null;
         duration = 60000;
@@ -26,7 +29,9 @@ public class FlashManager extends Thread {
 
     public FlashManager(File f1, Interface i1) throws IOException {
         f = f1;
+        mm = new MusicManager(i1);
         DataInputStream is = new DataInputStream(new FileInputStream(f));
+        mm.loadMusic(is.readLine());
         duration = is.readInt();
         while (is.available() > 0) {
             int t = is.readInt();
@@ -113,6 +118,13 @@ public class FlashManager extends Thread {
         buttonsChanged = true;
     }
 
+    public void setDuration(Integer tmp, Interface i1) {
+        Main.e.hasChanged = true;
+        Main.e.duration = tmp;
+        Main.e.buttonsChanged = true;
+        Main.e.draw(i1);
+    }
+
     public void draw(Interface i2) {
         class FlashButton extends Button {
             FlashButton(Flash f) {
@@ -178,7 +190,6 @@ public class FlashManager extends Thread {
     }
 
     public void save() throws IOException {
-        System.out.println("save");
         JFileChooser fc = new JFileChooser();
         if (f != null) {
             fc.setSelectedFile(f);
@@ -194,17 +205,19 @@ public class FlashManager extends Thread {
             return;
         }
         DataOutputStream os = new DataOutputStream(new FileOutputStream(f));
+        os.write((((mm.path != null && !mm.path.contentEquals("")) ? mm.path : "") + "\n").getBytes(StandardCharsets.UTF_8));
         os.writeInt(duration);
-        for (Flash f : flashes) {
-            os.writeInt(f.time);
-            os.writeBoolean(f.metronome);
-            os.writeInt(f.inter);
-            os.writeInt(f.n);
+        for (Flash flash : flashes) {
+            os.writeInt(flash.time);
+            os.writeBoolean(flash.metronome);
+            os.writeInt(flash.inter);
+            os.writeInt(flash.n);
         }
         hasChanged = false;
     }
 
     public void stopp() {
+        mm.reset();
         playing = false;
         time = 0;
         nfi = 0;
@@ -214,6 +227,7 @@ public class FlashManager extends Thread {
     }
 
     public void togglePlay() {
+        Main.e.mm.togglePLay();
         if (!playing) {
             oldTime = System.currentTimeMillis();
         }

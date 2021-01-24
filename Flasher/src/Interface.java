@@ -7,6 +7,7 @@ public class Interface extends Container {
     JButton bNew;
     JButton bLoad;
     JButton bSave;
+    JButton bMusic;
     JButton bM5;
     JButton bM1;
     JButton bP5;
@@ -25,22 +26,27 @@ public class Interface extends Container {
         Font f1 = new Font(font, Font.BOLD, (int) (15 * sizeFactor));
         setBounds(0, topBarSize, f.getWidth(), f.getHeight() - topBarSize);
         bNew = new MJButton("Nouveau", f1);
-        bNew.setBounds(0, 0, f.getWidth() / 6, (int) (50 * sizeFactor));
+        bNew.setBounds(0, 0, f.getWidth() / 8, (int) (50 * sizeFactor));
         bNew.addActionListener(new NewListener(this));
         this.add(bNew);
         bLoad = new MJButton("Charger", f1);
-        bLoad.setBounds(f.getWidth() / 6, 0, f.getWidth() / 6, (int) (50 * sizeFactor));
+        bLoad.setBounds(f.getWidth() / 8, 0, f.getWidth() / 8, (int) (50 * sizeFactor));
         bLoad.addActionListener(new LoadListener(this));
         this.add(bLoad);
         bSave = new MJButton("Sauvegarder", f1);
-        bSave.setBounds(f.getWidth() / 3, 0, f.getWidth() / 6, (int) (50 * sizeFactor));
+        bSave.setBounds(f.getWidth() / 4, 0, f.getWidth() / 8, (int) (50 * sizeFactor));
         bSave.addActionListener(new SaveListener());
         this.add(bSave);
+        bMusic = new MJButton("Musique", f1);
+        bMusic.setBounds((3*f.getWidth()) / 8, 0, f.getWidth() / 8, (int) (50 * sizeFactor));
+        bMusic.addActionListener(new MusicListener());
+        this.add(bMusic);
         bM5 = new MJButton("⏮ 5", f1);
         bM5.setBounds(0, (int) (50 * sizeFactor), f.getWidth() / 6, (int) (50 * sizeFactor));
         bM5.addActionListener(e -> {
             Main.e.time -= 5000;
             Main.e.nfi = 0;
+            Main.e.mm.changeTime(-5000);
         });
         this.add(bM5);
         bM1 = new MJButton("⏮ 1", f1);
@@ -48,6 +54,7 @@ public class Interface extends Container {
         bM1.addActionListener(e -> {
             Main.e.time -= 1000;
             Main.e.nfi = 0;
+            Main.e.mm.changeTime(-1000);
         });
         this.add(bM1);
         bP5 = new MJButton("5 ⏭", f1);
@@ -55,6 +62,7 @@ public class Interface extends Container {
         bP5.addActionListener(e -> {
             Main.e.time += 5000;
             Main.e.nfi = 0;
+            Main.e.mm.changeTime(5000);
         });
         this.add(bP5);
         bStop = new MJButton("⏹", f1);

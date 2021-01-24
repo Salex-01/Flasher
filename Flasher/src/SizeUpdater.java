@@ -31,11 +31,13 @@ public class SizeUpdater implements MouseMotionListener {
             ow = f.getWidth();
             double sizeFactor = ((double) (f.getHeight())) / 400;
             Font f1 = new Font(font, Font.BOLD, (int) (15 * sizeFactor));
-            i.bNew.setBounds(0, 0, f.getWidth() / 6, (int) (50 * sizeFactor));
+            i.bNew.setBounds(0, 0, f.getWidth() / 8, (int) (50 * sizeFactor));
             i.bNew.setFont(f1);
-            i.bLoad.setBounds(f.getWidth() / 6, 0, f.getWidth() / 6, (int) (50 * sizeFactor));
+            i.bLoad.setBounds(f.getWidth() / 8, 0, f.getWidth() / 8, (int) (50 * sizeFactor));
             i.bLoad.setFont(f1);
-            i.bSave.setBounds(f.getWidth() / 3, 0, f.getWidth() / 6, (int) (50 * sizeFactor));
+            i.bSave.setBounds(f.getWidth() / 4, 0, f.getWidth() / 8, (int) (50 * sizeFactor));
+            i.bSave.setFont(f1);
+            i.bMusic.setBounds((3 * f.getWidth()) / 8, 0, f.getWidth() / 8, (int) (50 * sizeFactor));
             i.bSave.setFont(f1);
             i.bM5.setBounds(0, (int) (50 * sizeFactor), f.getWidth() / 6, (int) (50 * sizeFactor));
             i.bM5.setFont(f1);

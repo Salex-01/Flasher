@@ -13,10 +13,7 @@ public class DurationListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Integer tmp = askDuration();
         if (tmp != null && Main.e != null) {
-            Main.e.hasChanged = true;
-            Main.e.duration = tmp;
-            Main.e.buttonsChanged = true;
-            Main.e.draw(i);
+            Main.e.setDuration(tmp,i);
         }
     }
 
